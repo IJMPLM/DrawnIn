@@ -9,6 +9,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,6 +27,18 @@ fun MainMenuScreen(navController: NavHostController) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // Centered header text
+        Text(
+            text = "Drawn In",
+            color = Color.Black,
+            fontSize = 150.sp, // Increased font size
+            fontFamily = FontFamily(Font(R.font.mainmenufont)),
+            fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, // Bold styling
+            textAlign = TextAlign.Center,
+            lineHeight = 100.sp,
+            modifier = Modifier.padding(bottom = 24.dp)
+        )
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
@@ -47,7 +61,7 @@ fun MainMenuScreen(navController: NavHostController) {
 fun MenuBox(label: String, iconResId: Int, onClick: () -> Unit) {
     Column(
         modifier = Modifier
-            .size(120.dp)
+            .size(140.dp) // Increased size of the entire clickable area
             .background(
                 color = Color(0xFF9b59b6),
                 shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp)
@@ -60,7 +74,7 @@ fun MenuBox(label: String, iconResId: Int, onClick: () -> Unit) {
         androidx.compose.foundation.Image(
             painter = painterResource(id = iconResId),
             contentDescription = label,
-            modifier = Modifier.size(48.dp)
+            modifier = Modifier.size(80.dp) // Adjusted icon size to fit within the new box size
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
