@@ -26,6 +26,8 @@ import kotlin.text.toFloat
 
 @Composable
 fun QuestionnaireScreen(
+    subject: String,
+    lessonName: String,
     questions: List<Question>,
     navController: NavHostController
 ) {
@@ -140,7 +142,8 @@ fun QuestionnaireScreen(
             }
         }
     } else {
-        // Navigate to ResultSummaryScreen
-        navController.navigate("resultSummary/${userAnswers.joinToString(",")}")
+        val answersParam = userAnswers.joinToString(",") { it.replace(",", "%2C") } // To avoid issues with commas
+
+        navController.navigate("resultSummary/$subject/$lessonName/$answersParam")
     }
 }

@@ -49,14 +49,26 @@ fun AppNavigation() {
                 else -> null
             }
             if (selectedLesson != null) {
-                QuestionnaireScreen(selectedLesson.questions, navController)
+                QuestionnaireScreen(subject, lessonName, selectedLesson.questions, navController)
+
             }
         }
-        composable("resultSummary/{userAnswers}") { backStackEntry ->
-            val userAnswers = backStackEntry.arguments?.getString("userAnswers")?.split(",") ?: emptyList()
-            val lesson = LessonData.artsLessons.firstOrNull { it.name == "Minus" } // Adjust as needed
-            if (lesson != null) {
-                ResultSummaryScreen(lesson.questions, userAnswers, navController)
+        composable("resultSummary/{subject}/{lessonName}/{userAnswers}") { backStackEntry ->
+            val subject = backStackEntry.arguments?.getString("subject") ?: "Unknown"
+            val lessonName = backStackEntry.arguments?.getString("lessonName") ?: "Unknown"
+            val answersString = backStackEntry.arguments?.getString("userAnswers") ?: ""
+            val userAnswers = answersString
+                .split(",")
+                .map { it.replace("%2C", ",") } // Or URLDecoder.decode(it, "UTF-8") if you use URLEncoder
+            val selectedLesson = when (subject) {
+                "ARTS" -> LessonData.artsLessons.firstOrNull { it.name == lessonName }
+                "MATH" -> LessonData.mathLessons.firstOrNull { it.name == lessonName }
+                "MUSIC" -> LessonData.musicLessons.firstOrNull { it.name == lessonName }
+                "SCIENCE" -> LessonData.scienceLessons.firstOrNull { it.name == lessonName }
+                else -> null
+            }
+            if (selectedLesson != null) {
+                ResultSummaryScreen(selectedLesson.questions, userAnswers, navController)
             }
         }
     }
