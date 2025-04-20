@@ -13,6 +13,7 @@ import com.drawnin.ui.theme.DrawnInTheme
 import com.drawnin.screens.CatalogScreen
 import com.drawnin.screens.MainMenuScreen
 import com.drawnin.screens.QuestionnaireScreen
+import com.drawnin.screens.ResultSummaryScreen
 
 
 class MainActivity : ComponentActivity() {
@@ -40,9 +41,16 @@ fun AppNavigation() {
         }
         composable("questionnaire/{lessonName}") { backStackEntry ->
             val lessonName = backStackEntry.arguments?.getString("lessonName") ?: "Unknown"
-            val lesson = LessonData.artsLessons.firstOrNull { it.name == lessonName } // Adjust logic based on subject
+            val lesson = LessonData.artsLessons.firstOrNull { it.name == lessonName }
             if (lesson != null) {
                 QuestionnaireScreen(lesson.questions, navController)
+            }
+        }
+        composable("resultSummary/{userAnswers}") { backStackEntry ->
+            val userAnswers = backStackEntry.arguments?.getString("userAnswers")?.split(",") ?: emptyList()
+            val lesson = LessonData.artsLessons.firstOrNull { it.name == "Minus" } // Adjust as needed
+            if (lesson != null) {
+                ResultSummaryScreen(lesson.questions, userAnswers, navController)
             }
         }
     }
