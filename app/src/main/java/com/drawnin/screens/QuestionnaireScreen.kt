@@ -16,8 +16,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.drawnin.R
 import com.drawnin.data.Question
 import kotlin.compareTo
 import kotlin.inc
@@ -42,7 +45,7 @@ fun QuestionnaireScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White)
+                .background(colorResource(id= R.color.primary))
                 .padding(16.dp),
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -57,7 +60,9 @@ fun QuestionnaireScreen(
             ) {
                 Text(
                     text = currentQuestion.questionText,
-                    modifier = Modifier.padding(16.dp)
+                    modifier = Modifier.padding(16.dp),
+                    fontSize = 30.sp,
+                    lineHeight = 30.sp
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -74,7 +79,10 @@ fun QuestionnaireScreen(
                             .fillMaxWidth()
                             .padding(vertical = 4.dp)
                     ) {
-                        Text(text = option)
+                        Text(
+                            text = option,
+                            fontSize = 20.sp
+                            )
                     }
                 }
             }
@@ -138,7 +146,10 @@ fun QuestionnaireScreen(
                     paths.clear()
                 }
             ) {
-                Text(text = "Skip")
+                Text(
+                    text = "Skip",
+                    fontSize = 20.sp
+                )
             }
         }
     } else {
