@@ -1,5 +1,6 @@
 package com.drawnin.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -11,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.drawnin.data.Question
+import kotlin.text.get
 
 @Composable
 fun ResultSummaryScreen(
@@ -25,6 +27,7 @@ fun ResultSummaryScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(color = androidx.compose.ui.graphics.Color.White) // Solid background
             .padding(16.dp)
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Top,
@@ -50,16 +53,11 @@ fun ResultSummaryScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
+        Button(
+            onClick = { navController.navigate("mainMenu") }, // Navigate to main menu
+            modifier = Modifier.padding(top = 16.dp)
         ) {
-            Button(onClick = { navController.popBackStack("catalog", inclusive = false) }) {
-                Text(text = "Back to Catalog")
-            }
-            Button(onClick = { navController.popBackStack("questionnaire", inclusive = true) }) {
-                Text(text = "Try Again")
-            }
+            Text(text = "Back to Main Menu")
         }
     }
 }
