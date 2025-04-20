@@ -19,6 +19,10 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.drawnin.data.Question
+import kotlin.compareTo
+import kotlin.inc
+import kotlin.text.clear
+import kotlin.text.toFloat
 
 @Composable
 fun QuestionnaireScreen(
@@ -41,6 +45,7 @@ fun QuestionnaireScreen(
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            // Scrollable content
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -70,53 +75,53 @@ fun QuestionnaireScreen(
                         Text(text = option)
                     }
                 }
+            }
 
-                Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-                // Canvas for drawing
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(300.dp)
-                        .background(Color.LightGray)
-                        .border(2.dp, Color.Black)
-                        .pointerInput(Unit) {
-                            detectDragGestures(
-                                onDragStart = { offset ->
-                                    if (offset.x in 0f..this.size.width.toFloat() && offset.y in 0f..this.size.height.toFloat()) {
-                                        currentPath.moveTo(offset.x, offset.y)
-                                    }
-                                },
-                                onDrag = { change, _ ->
-                                    val constrainedX = change.position.x.coerceIn(0f, this.size.width.toFloat())
-                                    val constrainedY = change.position.y.coerceIn(0f, this.size.height.toFloat())
-                                    currentPath.lineTo(constrainedX, constrainedY)
-                                    currentPath = Path().apply {
-                                        addPath(currentPath)
-                                    }
-                                },
-                                onDragEnd = {
-                                    paths.add(currentPath)
-                                    currentPath = Path()
+            // Fixed canvas position
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(300.dp)
+                    .background(Color.LightGray)
+                    .border(2.dp, Color.Black)
+                    .pointerInput(Unit) {
+                        detectDragGestures(
+                            onDragStart = { offset ->
+                                if (offset.x in 0f..this.size.width.toFloat() && offset.y in 0f..this.size.height.toFloat()) {
+                                    currentPath.moveTo(offset.x, offset.y)
                                 }
-                            )
-                        }
-                ) {
-                    Canvas(modifier = Modifier.fillMaxSize()) {
-                        clipRect {
-                            paths.forEach { path ->
-                                drawPath(
-                                    path = path,
-                                    color = Color.Black,
-                                    style = androidx.compose.ui.graphics.drawscope.Stroke(width = 16f)
-                                )
+                            },
+                            onDrag = { change, _ ->
+                                val constrainedX = change.position.x.coerceIn(0f, this.size.width.toFloat())
+                                val constrainedY = change.position.y.coerceIn(0f, this.size.height.toFloat())
+                                currentPath.lineTo(constrainedX, constrainedY)
+                                currentPath = Path().apply {
+                                    addPath(currentPath)
+                                }
+                            },
+                            onDragEnd = {
+                                paths.add(currentPath)
+                                currentPath = Path()
                             }
+                        )
+                    }
+            ) {
+                Canvas(modifier = Modifier.fillMaxSize()) {
+                    clipRect {
+                        paths.forEach { path ->
                             drawPath(
-                                path = currentPath,
+                                path = path,
                                 color = Color.Black,
                                 style = androidx.compose.ui.graphics.drawscope.Stroke(width = 16f)
                             )
                         }
+                        drawPath(
+                            path = currentPath,
+                            color = Color.Black,
+                            style = androidx.compose.ui.graphics.drawscope.Stroke(width = 16f)
+                        )
                     }
                 }
             }
