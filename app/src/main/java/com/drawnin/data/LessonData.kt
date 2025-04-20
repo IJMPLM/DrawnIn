@@ -29,17 +29,17 @@ object LessonData {
     val artsLessons = listOf(
         Lesson(
             "Textures",
-            R.drawable.minus,
+            R.drawable.textures,
             questions = Textures.questions
         ),
         Lesson(
             "Shapes",
-            R.drawable.add,
+            R.drawable.shapes,
             questions = Shapes.questions
         ),
         Lesson(
             "Crafts",
-            R.drawable.times,
+            R.drawable.handcraft,
             questions = Crafts.questions
         )
     )
@@ -63,34 +63,34 @@ object LessonData {
     val musicLessons = listOf(
         Lesson(
             "Notes",
-            R.drawable.minus,
+            R.drawable.notes,
             questions = Notes.questions
         ),
         Lesson(
             "Instruments",
-            R.drawable.add,
+            R.drawable.instruments,
             questions = Instruments.questions
         ),
         Lesson(
             "Vocals",
-            R.drawable.times,
+            R.drawable.vocals,
             questions = Vocals.questions
         )
     )
     val scienceLessons = listOf(
         Lesson(
             "Weather",
-            R.drawable.minus,
+            R.drawable.weather,
             questions = Weather.questions
         ),
         Lesson(
             "Things",
-            R.drawable.add,
+            R.drawable.things,
             questions = Things.questions
         ),
         Lesson(
             "Forces",
-            R.drawable.times,
+            R.drawable.forces,
             questions = Forces.questions
         )
     )
