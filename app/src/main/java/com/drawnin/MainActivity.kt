@@ -1,6 +1,5 @@
 package com.drawnin
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -39,11 +38,18 @@ fun AppNavigation() {
             val subject = backStackEntry.arguments?.getString("subject") ?: "Unknown"
             CatalogScreen(subject, navController)
         }
-        composable("questionnaire/{lessonName}") { backStackEntry ->
+        composable("questionnaire/{subject}/{lessonName}") { backStackEntry ->
+            val subject = backStackEntry.arguments?.getString("subject") ?: "Unknown"
             val lessonName = backStackEntry.arguments?.getString("lessonName") ?: "Unknown"
-            val lesson = LessonData.artsLessons.firstOrNull { it.name == lessonName }
-            if (lesson != null) {
-                QuestionnaireScreen(lesson.questions, navController)
+            val selectedLesson = when (subject) {
+                "ARTS" -> LessonData.artsLessons.firstOrNull { it.name == lessonName }
+                "MATH" -> LessonData.mathLessons.firstOrNull { it.name == lessonName }
+                "MUSIC" -> LessonData.musicLessons.firstOrNull { it.name == lessonName }
+                "SCIENCE" -> LessonData.scienceLessons.firstOrNull { it.name == lessonName }
+                else -> null
+            }
+            if (selectedLesson != null) {
+                QuestionnaireScreen(selectedLesson.questions, navController)
             }
         }
         composable("resultSummary/{userAnswers}") { backStackEntry ->

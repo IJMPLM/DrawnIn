@@ -62,27 +62,33 @@ fun CatalogScreen(subject: String, navController: NavHostController) {
         val lessons = when (subject) {
             "ARTS" -> LessonData.artsLessons
             "MATH" -> LessonData.mathLessons
-            "MUSIC" -> LessonData.englishLessons
-            "SCIENCE" -> LessonData.filipinoLessons
+            "MUSIC" -> LessonData.musicLessons
+            "SCIENCE" -> LessonData.scienceLessons
             else -> emptyList()
         }
 
-        LessonGrid(lessons, navController)
+        LessonGrid(subject, lessons, navController)
     }
 }
 
 @Composable
-fun LessonGrid(lessons: List<Lesson>, navController: NavHostController) {
+fun LessonGrid(
+    subject: String,
+    lessons: List<Lesson>,
+    navController: NavHostController
+) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(16.dp), // Add padding to the grid
+        contentPadding = PaddingValues(16.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         items(lessons.size) { index ->
             val lesson = lessons[index]
-            LessonItem(lesson = lesson, onClick = { navController.navigate("questionnaire/${lesson.name}") })
+            LessonItem(lesson = lesson, onClick = {
+                navController.navigate("questionnaire/${subject}/${lesson.name}") // Pass the subject and lesson name
+            })
         }
     }
 }
